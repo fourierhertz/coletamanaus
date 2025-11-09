@@ -50,22 +50,7 @@
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
-        <!-- ABA DE PESQUISA COM IA -->
-<div class="container my-3">
-    <div class="card border-success shadow-sm">
-        <div class="card-body p-3">
-            <p class="mb-2 fw-bold text-success">Está com dúvida sobre como descartar?</p>
-            <div class="input-group">
-                <input type="text" id="iaQuery" class="form-control" placeholder="Ex: garrafa pet, lata de sardinha, pilha..." aria-label="Pergunte à IA">
-                <button class="btn btn-success" type="button" id="iaBtn">
-                    <i class="bi bi-robot"></i> Perguntar à IA
-                </button>
-            </div>
-            <div id="iaResponse" class="mt-3 p-3 bg-light rounded d-none"></div>
-        </div>
-    </div>
-</div>
-        <div class="container">
+            <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img src="logo-unilins.png" alt="Universidade Nilton Lins" width="50" height="50" class="me-2 shadow-sm">
                 <span class="fw-bold">Coleta Seletiva Manaus</span>
@@ -294,37 +279,8 @@
             });
         });
     </script>
-    <script>
-document.getElementById('iaBtn').addEventListener('click', async () => {
-    const query = document.getElementById('iaQuery').value.trim();
-    const responseDiv = document.getElementById('iaResponse');
-    if (!query) {
-        responseDiv.innerHTML = '<small class="text-danger">Digite algo para eu ajudar!</small>';
-        responseDiv.classList.remove('d-none');
-        return;
-    }
-
-    responseDiv.innerHTML = '<small class="text-muted">Pensando...</small>';
-    responseDiv.classList.remove('d-none');
-
-    try {
-        const res = await fetch('https://grok.x.ai/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                messages: [{ role: "user", content: `Responda em até 2 frases, em português: como descartar ${query} na coleta seletiva de Manaus? Qual cor da lixeira? Pode ir sujo? Onde levar?` }],
-                model: "grok-beta"
-            })
-        });
-        const data = await res.json();
-        const answer = data.choices[0].message.content;
-        responseDiv.innerHTML = `<strong class="text-success">Resposta:</strong><br>${answer.replace(/\n/g, '<br>')}`;
-    } catch (e) {
-        responseDiv.innerHTML = '<small class="text-danger">Erro na IA. Tente novamente!</small>';
-    }
-});
-</script>
 </body>
 
 </html>
+
 
